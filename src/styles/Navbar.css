@@ -1,0 +1,32 @@
+/* Navbar.css */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(51, 51, 51); /* Match the color of the URL scanner header */
+  padding: 15px 40px; /* Increase padding for better spacing */
+}
+
+.logo {
+  width:45px;
+  height: 40px;
+}
+
+.nav-links {
+  display: flex; /* Make the links a flex container */
+  margin-left: 500px; /* Push the links to the center */
+  margin-right: 1px; /* Push the links to the center */
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff; /* Lighter text color */
+  font-size: 1.2rem;
+  font-weight: bold; /* Make the links bold for better visibility */
+  margin: 0 40px; /* Add margin to the links */
+}
+
+.nav-links a:hover {
+  color: #cc9900; /* Darker button color on hover */
+}
