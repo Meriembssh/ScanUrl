@@ -31,10 +31,18 @@ function Home() {
     console.log('Scanning...');
 
     try {
-  
-      const response = await axios.post(
-        'http://localhost:3001/start_scan', 
-        {url, depth}
+	const formData = new URLSearchParams();
+	formData.append('url', url);
+	formData.append('depth', depth);  
+        const response = await axios.post(
+        'http://10.130.163.33:8000/start_worker', 
+        formData,
+	{
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Access-Control-Allow-Origin': '*'
+	         }
+        }
       );
 
       console.log('Scan response:', response.data);
@@ -51,18 +59,20 @@ function Home() {
     return urlPattern.test(url);
   };
 
-  const waitForScanCompletion = async (scanId) => {
+  const waitForScanCompletion = async () => {
     console.log('Waiting for scan completion...');
     const poll = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/scan_status`, {
-          params: { scanId }
-        });
-
+        const response = axios.get(`http://10.130.163.33:8000/stats`);
+	
+	console.log(response.data);
         if (response.data && 'scanstate' in response.data && response.data.scanstate === 0) {
-          return false;
+          console.log(response.data);
+		console.log(response);
+		return false;
         } else {
           setResults(response.data);
+	  console.log(response.data);
           return true;
         }
       } catch (error) {
@@ -71,7 +81,7 @@ function Home() {
       }
     };
 
-    const pollInterval = 5000;
+    const pollInterval = 1000;
 
     while (true) {
       const scanComplete = await poll();
