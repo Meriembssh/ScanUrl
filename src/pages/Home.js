@@ -12,6 +12,7 @@ function Home() {
   const [results, setResults] = useState([]);
   const [urlError, setUrlError] = useState('');
   const [depthError, setDepthError] = useState('');
+  const [showResult, setShowResult] = useState(false);
 
   const handleScan = async () => {
     console.log('Starting scan...');
@@ -63,16 +64,15 @@ function Home() {
     console.log('Waiting for scan completion...');
     const poll = async () => {
       try {
-        const response = axios.get(`http://10.130.163.33:8000/stats`);
+        const response = await axios.get(`http://10.130.163.33:8000/stats`);
 	
 	console.log(response.data);
         if (response.data && 'scanstate' in response.data && response.data.scanstate === 0) {
           console.log(response.data);
-		console.log(response);
 		return false;
         } else {
           setResults(response.data);
-	  console.log(response.data);
+	  setShowResult(true);
           return true;
         }
       } catch (error) {
@@ -113,8 +113,8 @@ function Home() {
       {scanning ? (
         <ProgressPage url={url} />
       ) : (
-        results.length > 0 ? (
-          <ResultPage results={results} />
+        showResult ? (
+          <ResultPage url={url} data={results} />
         ) : (
           <div className="container">
             <div className="background-shapes"></div>
