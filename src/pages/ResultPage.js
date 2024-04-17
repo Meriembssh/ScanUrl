@@ -2,6 +2,12 @@ import React from 'react';
 import '../styles/ResultPage.css';
 
 function LinkList({ links }) {
+  // Check if 'links' is an object and convert it to an array using Object.values()
+  if (typeof links === 'object' && links !== null && !Array.isArray(links)) {
+    links = Object.values(links);
+  }
+
+  // Now 'links' is definitely an array and we can map over it
   return (
     <ul className="links-list">
       {links.map((link, index) => (
@@ -12,6 +18,7 @@ function LinkList({ links }) {
     </ul>
   );
 }
+
 
 function ResultPage({ url, data }) {
   if (!data || Object.keys(data).length === 0) {
