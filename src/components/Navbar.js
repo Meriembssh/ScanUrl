@@ -12,7 +12,6 @@ function Navbar() {
       </a>
       <div className="nav-links">
         <a href="/">Home</a>
-        <a href="/report">Report</a>
       </div>
     </nav>
   );
